@@ -1,0 +1,9 @@
+# takes a list of words and tranform to one hot encoding with pytorch
+def encode(words):
+    # your code goes here
+    max_len = len(max(words, key=len)) 
+    encoder = torch.zeros(len(words), max_len, 26,dtype=torch.int)
+    for word in range(len(words)):
+        asc_word = [(ord(c)-97) for c in words[word]]            
+        encoder[word, list(range(len(words[word]))), asc_word] =1
+    return encoder
