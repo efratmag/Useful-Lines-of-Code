@@ -1,6 +1,7 @@
 def merge_categories_with_low_freq(df, feature_name, threshold=1):
-
-    counts = pd.value_counts(df.feature_name)
-    mask = (counts / counts.sum() * 100).lt(threshold)
-    df = df.assign(feature_name+'_updated' = np.where(df.feature_name.isin(counts[mask].index), 'Other', df.feature_name))
+    
+    new_feature_name = feature_name+'_updated'
+    counts = df[feature_name].value_counts()
+    mask = counts.lt(threshold)
+    df[new_feature_name] = np.where(df[feature_name].isin(counts[mask].index), 'Other', df[feature_name])
     return df
